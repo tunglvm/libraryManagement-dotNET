@@ -3,10 +3,68 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:libraryManagement.Views"
+             xmlns:viewmodels="clr-namespace:libraryManagement.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             d:DesignHeight="600" d:DesignWidth="1000"
+             Padding="20">
+    <UserControl.DataContext>
+        <viewmodels:BookViewModel/>
+    </UserControl.DataContext>
+
+    <Grid Background="#F5F6FA">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="320"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Background="White" CornerRadius="8" Padding="15" Margin="0,0,15,0">
+            <StackPanel>
+                <TextBlock Text="THÔNG TIN SÁCH" FontSize="16" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,15" HorizontalAlignment="Center"/>
+
+                <TextBlock Text="Mã Sách:" Margin="0,5,0,2" OverridesDefaultStyle="True"/>
+                <TextBox Text="{Binding BookId, UpdateSourceTrigger=PropertyChanged}" Height="28" VerticalContentAlignment="Center" Margin="0,0,0,10"/>
+
+                <TextBlock Text="Tên Sách:" Margin="0,5,0,2"/>
+                <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" Height="28" VerticalContentAlignment="Center" Margin="0,0,0,10"/>
+
+                <TextBlock Text="Tác Giả:" Margin="0,5,0,2"/>
+                <TextBox Text="{Binding Author, UpdateSourceTrigger=PropertyChanged}" Height="28" VerticalContentAlignment="Center" Margin="0,0,0,10"/>
+
+                <TextBlock Text="Thể Loại:" Margin="0,5,0,2"/>
+                <TextBox Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Height="28" VerticalContentAlignment="Center" Margin="0,0,0,10"/>
+
+                <Grid Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                        <TextBlock Text="Năm XB:" Margin="0,5,0,2"/>
+                        <TextBox Text="{Binding PublishingYear, UpdateSourceTrigger=PropertyChanged}" Height="28" VerticalContentAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="5,0,0,0">
+                        <TextBlock Text="Số Lượng:" Margin="0,5,0,2"/>
+                        <TextBox Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}" Height="28" VerticalContentAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+
+                <Button Content="Thêm Mới Sách" Command="{Binding AddBookCommand}" Height="35" Background="#2ECC71" Foreground="White" FontWeight="Bold" BorderThickness="0" Margin="0,5,0,5"/>
+                <Button Content="Xóa Sách Chọn" Command="{Binding DeleteBookCommand}" Height="35" Background="#E74C3C" Foreground="White" FontWeight="Bold" BorderThickness="0" Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Column="1" Background="White" CornerRadius="8" Padding="10">
+            <DataGrid ItemsSource="{Binding Books}" SelectedItem="{Binding SelectedBook}" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single" RowHeight="30" Background="White">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Mã Sách" Binding="{Binding BookId}" Width="80"/>
+                    <DataGridTextColumn Header="Tên Sách" Binding="{Binding Title}" Width="*"/>
+                    <DataGridTextColumn Header="Tác Giả" Binding="{Binding Author}" Width="130"/>
+                    <DataGridTextColumn Header="Thể Loại" Binding="{Binding Category}" Width="100"/>
+                    <DataGridTextColumn Header="Năm XB" Binding="{Binding PublishingYear}" Width="70"/>
+                    <DataGridTextColumn Header="Tổng Số" Binding="{Binding TotalQuantity}" Width="70"/>
+                    <DataGridTextColumn Header="Còn Lại" Binding="{Binding AvailableQuantity}" Width="70"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
     </Grid>
 </UserControl>

@@ -37,6 +37,19 @@ namespace libraryManagement.ViewModels
         private int _quantity;
         public int Quantity { get => _quantity; set { _quantity = value; OnPropertyChanged(); } }
 
+        // Thuộc tính phục vụ Tìm kiếm thời gian thực
+        private string _searchText;
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value;
+                OnPropertyChanged();
+                ApplyFilter(); // Tự động lọc danh sách mỗi khi người dùng gõ chữ
+            }
+        }
+
         // Khai báo các lệnh (Commands) cho Button
         public ICommand AddBookCommand { get; }
         public ICommand DeleteBookCommand { get; }
@@ -78,6 +91,31 @@ namespace libraryManagement.ViewModels
             if (SelectedBook != null)
             {
                 Books.Remove(SelectedBook);
+            }
+        }
+
+        // Logic bộ lọc tìm kiếm dữ liệu
+        private void ApplyFilter()
+        {
+            var view = System.Windows.Data.CollectionViewSource.GetDefaultView(Books);
+            if (view == null) return;
+
+            if (string.IsNullOrEmpty(SearchText))
+            {
+                view.Filter = null; // Nếu ô tìm kiếm trống, hiển thị lại toàn bộ danh sách
+            }
+            else
+            {
+                view.Filter = obj =>
+                {
+                    if (obj is Book book)
+                    {
+                        // Tìm kiếm không phân biệt chữ hoa chữ thường theo cả Tên sách hoặc Tác giả
+                        return (book.Title != null && book.Title.ToLower().Contains(SearchText.ToLower())) ||
+                               (book.Author != null && book.Author.ToLower().Contains(SearchText.ToLower()));
+                    }
+                    return false;
+                };
             }
         }
 

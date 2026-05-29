@@ -21,7 +21,7 @@
             <StackPanel>
                 <TextBlock Text="THÔNG TIN SÁCH" FontSize="16" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,15" HorizontalAlignment="Center"/>
 
-                <TextBlock Text="Mã Sách:" Margin="0,5,0,2" OverridesDefaultStyle="True"/>
+                <TextBlock Text="Mã Sách:" Margin="0,5,0,2"/>
                 <TextBox Text="{Binding BookId, UpdateSourceTrigger=PropertyChanged}" Height="28" VerticalContentAlignment="Center" Margin="0,0,0,10"/>
 
                 <TextBlock Text="Tên Sách:" Margin="0,5,0,2"/>
@@ -54,17 +54,33 @@
         </Border>
 
         <Border Grid.Column="1" Background="White" CornerRadius="8" Padding="10">
-            <DataGrid ItemsSource="{Binding Books}" SelectedItem="{Binding SelectedBook}" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single" RowHeight="30" Background="White">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Mã Sách" Binding="{Binding BookId}" Width="80"/>
-                    <DataGridTextColumn Header="Tên Sách" Binding="{Binding Title}" Width="*"/>
-                    <DataGridTextColumn Header="Tác Giả" Binding="{Binding Author}" Width="130"/>
-                    <DataGridTextColumn Header="Thể Loại" Binding="{Binding Category}" Width="100"/>
-                    <DataGridTextColumn Header="Năm XB" Binding="{Binding PublishingYear}" Width="70"/>
-                    <DataGridTextColumn Header="Tổng Số" Binding="{Binding TotalQuantity}" Width="70"/>
-                    <DataGridTextColumn Header="Còn Lại" Binding="{Binding AvailableQuantity}" Width="70"/>
-                </DataGrid.Columns>
-            </DataGrid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Margin="0,0,0,12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="🔍 Tìm kiếm nhanh:" VerticalAlignment="Center" FontSize="13" FontWeight="SemiBold" Foreground="#34495E" Margin="0,0,10,0"/>
+                    <TextBox Grid.Column="1" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Height="28" VerticalContentAlignment="Center" Padding="5,0,0,0"/>
+                </Grid>
+
+                <DataGrid Grid.Row="1" ItemsSource="{Binding Books}" SelectedItem="{Binding SelectedBook}" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single" RowHeight="30" Background="White">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Mã Sách" Binding="{Binding BookId}" Width="80"/>
+                        <DataGridTextColumn Header="Tên Sách" Binding="{Binding Title}" Width="*"/>
+                        <DataGridTextColumn Header="Tác Giả" Binding="{Binding Author}" Width="130"/>
+                        <DataGridTextColumn Header="Thể Loại" Binding="{Binding Category}" Width="100"/>
+                        <DataGridTextColumn Header="Năm XB" Binding="{Binding PublishingYear}" Width="70"/>
+                        <DataGridTextColumn Header="Tổng Số" Binding="{Binding TotalQuantity}" Width="70"/>
+                        <DataGridTextColumn Header="Còn Lại" Binding="{Binding AvailableQuantity}" Width="70"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
         </Border>
     </Grid>
 </UserControl>

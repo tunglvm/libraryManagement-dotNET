@@ -5,8 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:libraryManagement.Views"
         mc:Ignorable="d"
-        Title="Trình Quản Lý Thư Viện Chuyên Nghiệp" Height="650" Width="1100" WindowStartupLocation="CenterScreen">
-    <Grid>
-        <views:BookView/>
+        Title="Hệ Thống Quản Lý Thư Viện Chuyên Nghiệp" Height="700" Width="1200" WindowStartupLocation="CenterScreen">
+
+    <Grid Background="#E9E9E9">
+        <TabControl TabStripPlacement="Top" Margin="5">
+
+            <TabItem Header=" QUẢN LÝ KHO SÁCH " FontSize="14" FontWeight="Bold" Padding="15,8">
+                <views:BookView/>
+            </TabItem>
+
+            <TabItem Header=" QUẢN LÝ MƯỢN - TRẢ " FontSize="14" FontWeight="Bold" Padding="15,8">
+                <views:BorrowView/>
+            </TabItem>
+
+        </TabControl>
     </Grid>
 </Window>
